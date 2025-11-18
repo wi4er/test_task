@@ -17,6 +17,8 @@ class ItemsController < ApplicationController
   end
 
   def create
+    require_admin
+
     @item = Item.new(
       name: params[:name],
       description: params[:description],
@@ -36,6 +38,8 @@ class ItemsController < ApplicationController
   end
 
   def update
+    require_admin
+
     @item = Item.find(params[:id])
 
     if @item.update(
@@ -55,12 +59,23 @@ class ItemsController < ApplicationController
   end
 
   def destroy
+    require_admin
+
     @item = Item.find(params[:id])
 
     if @item.destroy
       render json: {
         status: true
       }
+    end
+  end
+
+  def require_admin
+    unless current_user&.role === 'admin'
+      render json: {
+        status: false,
+        error: "Not allowed"
+      }, status: :forbidden
     end
   end
 end

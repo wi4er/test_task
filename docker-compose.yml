@@ -39,6 +39,7 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 
   api:
+    container_name: test-api
     build: api/.
 #    image: ruby:slim-trixie
     working_dir: /app
@@ -48,4 +49,4 @@ services:
     links:
       - postgres
     ports:
-      - "3000:3000"
+      - "3030:3000"

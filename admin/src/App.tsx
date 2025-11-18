@@ -22,8 +22,6 @@ function App() {
           <Route path={'/users'} element={<UserList/>}/>
           <Route path={'/products'} element={<ProductList />} />
         </Routes>
-
-        <AuthForm/>
       </UserContext>
     </BrowserRouter>
   );

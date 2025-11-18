@@ -1,5 +1,6 @@
 import css from './UserContext.module.css';
 import React from 'react';
+import { AuthForm } from '../components/AuthForm';
 
 export const userContext = React.createContext<any>({});
 
@@ -20,7 +21,6 @@ export function UserContext(
       method: 'GET',
       credentials: 'include',
     }).then(res => res.json()).then(res => {
-      console.log(res);
       if (res.status) setUser({user: res.user})
       else setUser({user: null});
     });
@@ -45,7 +45,7 @@ export function UserContext(
         console.log('LOG OUT');
       },
     }}>
-      {children}
+      {user ? children : <AuthForm />}
     </userContext.Provider>
   );
 }

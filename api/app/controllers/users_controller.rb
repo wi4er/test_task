@@ -1,62 +1,56 @@
-class ItemsController < ApplicationController
-  respond_to :json
-  skip_before_action :verify_authenticity_token
+class UsersController < ApplicationController
   before_action :require_admin!, only: [:create, :update, :destroy]
 
   def index
     render json: {
       status: true,
-      data: Item.all
+      data: User.all
     }
   end
 
   def show
     render json: {
       status: true,
-      data: Item.find(params[:id])
+      data: User.find(params[:id])
     }
   end
 
   def create
-    @item = Item.new(
-      name: params[:name],
-      description: params[:description],
-      price: params[:price]
+    @item = User.new(
+      email: params[:email],
+      encrypted_password: params[:password]
     )
 
     if @item.save
       render json: {
         status: true,
         data: {
-          name: @item.name,
-          description: @item.description,
-          price: @item.price
+          email: @item.email,
+          password: @item.encrypted_password,
         }
       }
     end
   end
 
   def update
-    @item = Item.find(params[:id])
+    @item = User.find(params[:id])
 
     if @item.update(
-      name: params[:name],
-      description: params[:description],
-      price: params[:price]
+      email: params[:email],
+      encrypted_password: params[:password],
     )
       render json: {
         status: true,
         data: {
-          name: @item.name,
+          email: @item.email,
           description: @item.description,
-          price: @item.price
         }
       }
     end
   end
 
   def destroy
-    @item = Item.find(params[:id])
+    @item = User.find(params[:id])
 
     if @item.destroy
       render json: {

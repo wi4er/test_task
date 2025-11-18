@@ -1,6 +1,7 @@
 import css from './UserContext.module.css';
 import React from 'react';
 import { AuthForm } from '../components/AuthForm';
+import { apiContext } from './ApiContext';
 
 export const userContext = React.createContext<any>({});
 
@@ -11,17 +12,15 @@ export function UserContext(
     children: React.ReactNode;
   },
 ) {
+  const {fetchData, postData} = React.useContext(apiContext);
   const [user, setUser] = React.useReducer((state: any, action: any) => {
 
     return action.user;
   }, undefined);
 
   React.useEffect(() => {
-    fetch('http://localhost:3000/users/me', {
-      method: 'GET',
-      credentials: 'include',
-    }).then(res => res.json()).then(res => {
-      if (res.status) setUser({user: res.user})
+    fetchData('session/me').then((res: any) => {
+      if (res.status) setUser({user: res.data})
       else setUser({user: null});
     });
   }, []);
@@ -30,14 +29,7 @@ export function UserContext(
     <userContext.Provider value={{
       user,
       fetchUser: (email: string, password: string) => {
-        fetch('http://localhost:3000/users/sign_in', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: 'include',
-          body: JSON.stringify({email, password}),
-        }).then(res => res.json()).then(res => {
+        postData('session/sign_in', {email, password}).then((res: any) => {
           if (res.status) setUser({user: res.user});
         });
       },

@@ -10,19 +10,16 @@ import { DataGrid } from '@mui/x-data-grid';
 import { columns } from './columns';
 import { ProductForm } from '../ProductForm';
 import { productContext } from './product.context';
+import { apiContext } from '../../context/ApiContext';
 
 export function ProductList() {
+  const {fetchData, deleteData} = React.useContext(apiContext);
   const [list, setList] = React.useState<Array<UserEntity>>([]);
   const [edit, setEdit] = React.useState<boolean>(false);
   const [editProduct, setEditProduct] = React.useState<number>(0);
 
   async function fetchProductList() {
-    fetch('http://localhost:3000/items', {
-      method: 'GET',
-      credentials: 'include',
-    }).then(res => res.json()).then(res => {
-      setList(res.data);
-    });
+    fetchData('items').then((res: any) => setList(res.data));
   }
 
   React.useEffect(() => {
@@ -36,10 +33,7 @@ export function ProductList() {
         setEditProduct(id);
       },
       deleteItem: (id: number) => {
-        fetch(`http://localhost:3000/items/${id}`, {
-          method: 'DELETE',
-          credentials: 'include',
-        }).then(res => res.json()).then(res => {
+        deleteData(`items/${id}`).then((res: any) => {
           if (res.status) fetchProductList();
         });
       },

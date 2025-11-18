@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormEvent } from 'react';
+import { apiContext } from '../../context/ApiContext';
 
 export function ProductForm(
   {
@@ -20,6 +21,7 @@ export function ProductForm(
     productId?: number;
   },
 ) {
+  const {fetchData, putData, postData} = React.useContext(apiContext);
   const [id, setId] = React.useState(0);
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
@@ -29,25 +31,11 @@ export function ProductForm(
     event.preventDefault();
 
     if (productId) {
-      fetch(`http://localhost:3000/items/${productId}`, {
-        method: 'PUT',
-        headers: {
-          'content-type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({name, description, price}),
-      }).then(res => res.json()).then(res => {
+      putData(`items/${productId}`, {name, description, price}).then((res: any) => {
         if (res.status) handleClose();
       });
     } else {
-      fetch('http://localhost:3000/items', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({name, description, price}),
-      }).then(res => res.json()).then(res => {
+      postData('items', {name, description, price}).then((res: any) => {
         if (res.status) handleClose();
       });
     }
@@ -55,14 +43,14 @@ export function ProductForm(
 
   React.useEffect(() => {
     if (productId) {
-      fetch(`http://localhost:3000/items/${productId}`).then(res => res.json()).then(res => {
+      fetchData(`items/${productId}`).then((res: any) => {
         setId(res.data.id);
         setName(res.data.name);
         setDescription(res.data.description);
         setPrice(res.data.price);
       });
     }
-  }, [productId])
+  }, [productId]);
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -76,14 +64,14 @@ export function ProductForm(
         <form onSubmit={handleSubmit} id="subscription-form">
           {productId && <div>
               <TextField
-              margin="dense"
-              id="id"
-              name="id"
-              label="ID"
-              variant="standard"
-              value={id}
-              disabled
-            />
+                  margin="dense"
+                  id="id"
+                  name="id"
+                  label="ID"
+                  variant="standard"
+                  value={id}
+                  disabled
+              />
           </div>}
 
           <TextField

@@ -1,6 +1,6 @@
 import React from 'react';
 import css from './index.module.css';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -8,18 +8,14 @@ import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
 import { UserEntity } from '../../model/User.entity';
 import { columns } from './columns';
+import { apiContext } from '../../context/ApiContext';
 
 export function UserList() {
+  const {fetchData} = React.useContext(apiContext);
   const [list, setList] = React.useState<Array<UserEntity>>([]);
 
   React.useEffect(() => {
-    fetch('http://localhost:3000/users', {
-      method: 'GET',
-      credentials: 'include',
-    }).then(res  => res.json()).then(res  => {
-      setList(res.data)
-      console.log(res);
-    });
+    fetchData('users').then((res: any)  => setList(res.data));
   }, []);
 
   return (

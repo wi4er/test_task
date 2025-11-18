@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
-  resources :articles
   resources :items, defaults: { format: :json }
+  resources :users, defaults: { format: :json }
 
   devise_for :users,
              controllers: {
-               sessions: "users/sessions"
+               sessions: "users"
              }
 
   devise_scope :user do
-    get "users", to: "users/sessions#index", defaults: { format: :json }
-    get "users/me", to: "users/sessions#me", defaults: { format: :json }
-    post "users/sign_in", to: "users/sessions#create", defaults: { format: :json }
-    delete "users/sign_out", to: "users/sessions#destroy", defaults: { format: :json }
+    get "session/me", to: "session#me", defaults: { format: :json }
+    post "session/sign_in", to: "session#create", defaults: { format: :json }
+    delete "session/sign_out", to: "session#destroy", defaults: { format: :json }
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

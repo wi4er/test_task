@@ -1,0 +1,30 @@
+
+.root {
+    display: grid;
+    grid-template:
+    "image .    .     .     delete .    " 24px
+    "image .    title .     delete .    "
+    "image .    .     .     delete .    " 8px
+    "image .    price .     delete .    "
+    "image .    .     .     delete .    " 28px
+    /108px 32px 1fr   32px  20px   18px;
+}
+
+.image {
+    grid-area: image;
+}
+
+.title {
+    grid-area: title;
+    font-size: 16px;
+}
+
+.price {
+    grid-area: price;
+    font-size: 12px;
+}
+
+.delete {
+    grid-area: delete;
+    align-self: center;
+}

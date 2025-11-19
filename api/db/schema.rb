@@ -51,7 +51,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_17_082937) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.string "password"
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

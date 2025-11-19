@@ -50,3 +50,13 @@ services:
       - postgres
     ports:
       - "3030:3000"
+
+  site:
+    container_name: test-site
+    image: node:24
+    working_dir: /app
+    command: npm run dev
+    volumes:
+      - ./site:/app
+    links:
+      - api

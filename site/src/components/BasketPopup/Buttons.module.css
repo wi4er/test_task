@@ -1,0 +1,18 @@
+
+.root {
+    display: flex;
+    gap: 14px;
+}
+
+.item {
+    cursor: pointer;
+    padding: 6px 30px;
+    border-radius: 15px;
+    background-color: #FFF;
+    border: 1px solid #000;
+    transition: 250ms;
+}
+
+.item:hover {
+    box-shadow: 0 5px 15px #AAAA;
+}

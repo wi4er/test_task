@@ -1,0 +1,82 @@
+.root {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.substrate {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.basket {
+    position: relative;
+    width: 417px;
+    height: 746px;
+    background-color: #FFF;
+
+    display: grid;
+    grid-template:
+    ".     .       .   " 28px
+    ".     title   .   "
+    ".     .       .   " 26px
+    ".     line    .   " 1px
+    ".     .       .   " 42px
+    ".     list    .   " 1fr
+    ".     .       .   " 23px
+    ".     total   .   "
+    ".     .       .   " 23px
+    ".     full    .   " 1px
+    ".     .       .   " 26px
+    ".     buttons .   "
+    ".     .       .   " 28px
+    / 27px 1fr     22px;
+}
+
+.title {
+    grid-area: title;
+    font-size: 24px;
+}
+
+.line {
+    grid-area: line;
+    background-color: #D9D9D9;
+    margin: 0 78px 0 3px;
+}
+
+.list {
+    grid-area: list;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.total {
+    grid-area: total;
+    display: flex;
+
+    .label {
+        font-size: 16px;
+    }
+
+    .price {
+        flex: 1;
+        font-size: 16px;
+        color: #B88E2F;
+        text-align: center;
+    }
+}
+
+.full_line {
+    grid-area: full;
+    background-color: #D9D9D9;
+}
+
+.buttons {
+    grid-area: buttons;
+}

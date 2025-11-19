@@ -12,7 +12,7 @@ export function UserContext(
     children: React.ReactNode;
   },
 ) {
-  const {fetchData, postData} = React.useContext(apiContext);
+  const {fetchData, postData, deleteData} = React.useContext(apiContext);
   const [user, setUser] = React.useReducer((state: any, action: any) => {
 
     return action.user;
@@ -34,7 +34,13 @@ export function UserContext(
         });
       },
       logout: () => {
-        console.log('LOG OUT');
+        deleteData('session/sign_out').then((res: any) => {
+          console.log(res);
+
+          if (res.status) {
+            setUser({user: null});
+          }
+        });
       },
     }}>
       {user ? children : <AuthForm />}

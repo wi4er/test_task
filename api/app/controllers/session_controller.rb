@@ -1,6 +1,5 @@
-class SessionController < Devise::SessionsController
-  respond_to :json
-  skip_before_action :verify_authenticity_token, only: :create
+class SessionController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def create
     # logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
@@ -28,7 +27,12 @@ class SessionController < Devise::SessionsController
   def me
     render json: {
       status: !!current_user,
-      data: current_user
+      data: current_user.as_json(only: [:id, :email, :last_name, :first_name, :created_at])
     }
+  end
+
+  def destroy
+    sign_out(:user)
+    render json: { status: true }
   end
 end

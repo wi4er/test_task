@@ -60,7 +60,7 @@ class UsersController < ApplicationController
   end
 
   def require_admin!
-    unless current_user["role"] === "admin"
+    unless current_user&.role === "admin"
       render json: {
         status: false,
         error: "Not allowed"

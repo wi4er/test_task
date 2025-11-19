@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   resources :items, defaults: { format: :json }
   resources :users, defaults: { format: :json }
+  resources :orders, defaults: { format: :json }
 
   devise_for :users,
              controllers: {
-               sessions: "users"
+               session: "session"
              }
 
   devise_scope :user do

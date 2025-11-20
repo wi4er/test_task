@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   def index
     render json: {
       status: true,
-      data: Item.all
+      data: Item.order(updated_at: :desc).all
     }
   end
 
@@ -33,6 +33,11 @@ class ItemsController < ApplicationController
           price: @item.price
         }
       }
+    else
+      render json: {
+        status: false,
+        error: @item.errors
+      }, status: :bad_request
     end
   end
 
@@ -52,6 +57,11 @@ class ItemsController < ApplicationController
           price: @item.price
         }
       }
+    else
+      render json: {
+        status: false,
+        error: @item.errors
+      }, status: :bad_request
     end
   end
 
@@ -62,6 +72,11 @@ class ItemsController < ApplicationController
       render json: {
         status: true
       }
+    else
+      render json: {
+        status: false,
+        error: @item.errors
+      }, status: :bad_request
     end
   end
 

@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :items, defaults: { format: :json }
   resources :users, defaults: { format: :json }
+
+  get "orders/mine" => "orders$mine", defaults: { format: :json }
   resources :orders, defaults: { format: :json }
+
 
   devise_for :users,
              controllers: {

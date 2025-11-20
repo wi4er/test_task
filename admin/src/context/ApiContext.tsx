@@ -1,6 +1,4 @@
-import css from './ApiContext.module.css';
 import React, { ReactNode } from 'react';
-
 
 export const apiContext = React.createContext<any>(null);
 
@@ -13,9 +11,6 @@ export function ApiContext(
     children: ReactNode;
   },
 ) {
-
-  console.log(process.env);
-
   return (
     <apiContext.Provider value={{
       fetchData: async (path: string) => {

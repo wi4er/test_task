@@ -116,7 +116,7 @@ export function ProductForm(
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button type="submit" form="subscription-form">
-          Create
+          {!!productId ? 'Save' : "Create"}
         </Button>
       </DialogActions>
     </Dialog>

@@ -1,75 +1,71 @@
-import css from './index.module.css';
 import React from 'react';
 import { apiContext } from '../../context/ApiContext';
-import { UserEntity } from '../../model/User.entity';
-import { productContext } from '../ProductList/product.context';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { DataGrid } from '@mui/x-data-grid';
-import { columns } from '../ProductList/columns';
-import { ProductForm } from '../ProductForm';
+import EditIcon from '@mui/icons-material/Visibility';
+import { OrderEntity } from '../../model/Order.entity';
 
 export function OrderList() {
   const {fetchData, deleteData} = React.useContext(apiContext);
-  const [list, setList] = React.useState<Array<UserEntity>>([]);
-  const [edit, setEdit] = React.useState<boolean>(false);
-  const [editProduct, setEditProduct] = React.useState<number>(0);
+  const [list, setList] = React.useState<Array<OrderEntity>>([]);
+  const [edit, setEdit] = React.useState<number | null>(null);
 
-  async function fetchProductList() {
-    fetchData('items').then((res: any) => setList(res.data));
+  async function fetchOrderList() {
+    fetchData('orders').then((res: any) => setList(res.data));
   }
 
   React.useEffect(() => {
-    fetchProductList();
+    fetchOrderList();
   }, []);
 
   return (
-    <productContext.Provider value={{
-      openEdit: (id: number) => {
-        setEdit(true);
-        setEditProduct(id);
-      },
-      deleteItem: (id: number) => {
-        deleteData(`items/${id}`).then((res: any) => {
-          if (res.status) fetchProductList();
-        });
-      },
-    }}>
+    <div>
       <Toolbar>
         <Typography variant="h4" component="div" sx={{flexGrow: 1}}>
-          Product List
+          Order List
         </Typography>
-
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{mr: 2}}
-          onClick={() => setEdit(true)}
-        >
-          <AddIcon/>
-        </IconButton>
-
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          sx={{mr: 2}}
-          onClick={() => {
-          }}
-        >
-          <DeleteIcon/>
-        </IconButton>
       </Toolbar>
 
       <DataGrid
         rows={list ?? []}
-        columns={columns}
+        columns={[
+          {
+            field: 'edit',
+            headerName: '',
+            width: 50,
+            renderCell: element => (
+              <IconButton
+                size="small"
+                edge="start"
+                color="primary"
+                aria-label="edit"
+                sx={{mr: 2}}
+                onClick={() => setEdit(element.row.id)}
+              >
+                <EditIcon />
+              </IconButton>
+            ),
+          },
+          {field: 'id', headerName: 'ID', width: 90},
+          {
+            field: 'created_at',
+            headerName: 'Created',
+            width: 200,
+          },
+          {
+            field: 'amount',
+            headerName: 'Amount',
+            width: 150,
+          },
+          {
+            field: 'count',
+            headerName: 'Item count',
+            width: 150,
+            valueGetter: (value, row) => row.order_description.length
+          }
+        ]}
         initialState={{
           pagination: {
             paginationModel: {
@@ -79,15 +75,6 @@ export function OrderList() {
         }}
         pageSizeOptions={[5]}
       />
-
-      <ProductForm
-        open={edit}
-        productId={editProduct}
-        handleClose={() => {
-          setEdit(false);
-          fetchProductList();
-        }}
-      />
-    </productContext.Provider>
+    </div>
   );
 }

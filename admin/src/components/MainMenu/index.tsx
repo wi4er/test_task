@@ -4,9 +4,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
 import PersonIcon from '@mui/icons-material/Person';
 import DraftsIcon from '@mui/icons-material/Drafts';
+import OrderIcon from '@mui/icons-material/ShoppingBag';
 import { Links, Link } from 'react-router';
 import DialogTitle from '@mui/material/DialogTitle';
 
@@ -49,6 +49,20 @@ export function MainMenu(
                 <DraftsIcon/>
               </ListItemIcon>
               <ListItemText primary="Products"/>
+            </ListItemButton>
+          </ListItem>
+        </Link>
+
+        <Link
+          to={'/orders'}
+          onClick={onMove}
+        >
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <OrderIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Orders"/>
             </ListItemButton>
           </ListItem>
         </Link>

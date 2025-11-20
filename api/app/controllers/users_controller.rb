@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_admin!, only: [:create, :update, :destroy]
+  before_action :require_admin!
+  skip_before_action :verify_authenticity_token
 
   def index
     render json: {
@@ -16,46 +17,71 @@ class UsersController < ApplicationController
   end
 
   def create
-    @item = User.new(
+    @user = User.new(
       email: params[:email],
-      encrypted_password: params[:password]
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      password: params[:password],
+      role: params[:role]
     )
 
-    if @item.save
+    if @user.save
       render json: {
         status: true,
         data: {
-          email: @item.email,
-          password: @item.encrypted_password,
+          email: @user.email,
+          firstName: @user.first_name,
+          secondName: @user.last_name,
+          role: @user.role
         }
       }
+    else
+      render json: {
+        status: false,
+        error: @user.errors
+      }, status: :bad_request
     end
   end
 
   def update
-    @item = User.find(params[:id])
+    @user = User.find(params[:id])
 
-    if @item.update(
+    if @user.update(
       email: params[:email],
-      encrypted_password: params[:password],
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      password: params[:password],
+      role: params[:role]
     )
       render json: {
         status: true,
         data: {
-          email: @item.email,
-          description: @item.description,
+          email: @user.email,
+          firstName: @user.first_name,
+          secondName: @user.last_name,
+          role: @user.role
         }
       }
+    else
+      render json: {
+        status: false,
+        error: @user.errors
+      }, status: :forbidden
     end
   end
 
   def destroy
-    @item = User.find(params[:id])
+    @user = User.find(params[:id])
 
-    if @item.destroy
+    if @user.destroy
       render json: {
         status: true
       }
+    else
+      render json: {
+        status: false,
+        error: @user.errors
+      }, status: :forbidden
     end
   end
 

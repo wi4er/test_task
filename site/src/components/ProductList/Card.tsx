@@ -4,6 +4,7 @@ import { ProductEntity } from '@/model/product.entity';
 import imagePng from './mock/image.png';
 import cn from 'classnames';
 import font from '../../fonts/text-styles.module.css';
+import { basketContext } from '@/context/BasketProvider';
 
 export function Card(
   {
@@ -13,6 +14,7 @@ export function Card(
   },
 ) {
   const [hover, setHover] = React.useState(false);
+  const {dispatch} = React.useContext(basketContext);
 
   return (
     <div
@@ -43,7 +45,10 @@ export function Card(
       <div className={cn(css.popup, {
         [css.show]: hover,
       })}>
-        <button className={cn(css.buy, font.poppins_semi_bold)}>
+        <button
+          className={cn(css.buy, font.poppins_semi_bold)}
+          onClick={() => dispatch({type: 'ADD', product: item.id})}
+        >
           Add to cart
         </button>
       </div>

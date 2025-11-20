@@ -2,10 +2,10 @@ import React, { FormEvent } from 'react';
 import css from './index.module.css';
 import cn from 'classnames';
 import font from '@/fonts/text-styles.module.css';
-
+import { userContext } from '@/context/UserProvider';
+import { BigInput } from '@/widget/BigInput';
 
 export type UserFormType = 'authorization' | 'registration';
-
 
 function authUser(email: string, password: string) {
   return fetch('/api/session/sign_in', {
@@ -26,6 +26,7 @@ export function UserPopup(
     onClose: () => void;
   },
 ) {
+  const {user, setUser} = React.useContext(userContext);
   const [type, setType] = React.useState<UserFormType>('authorization');
   const [email, setEmail] = React.useState('333@ukr.net');
   const [password, setPassword] = React.useState('qwerty');
@@ -35,12 +36,13 @@ export function UserPopup(
     event.preventDefault();
 
     if (type === 'authorization') {
-      authUser(email, password)
-        .then(res => {
-          console.log(res);
-        });
+      authUser(email, password).then(res => {
+        if (res.status) {
+          setUser(res.data);
+          onClose();
+        }
+      });
     }
-
   }
 
   return (
@@ -61,76 +63,57 @@ export function UserPopup(
         <div className={css.line}/>
 
         <div className={css.form}>
-          <div className={css.field}>
-            <label className={cn(css.label, font.poppins_medium)}>
-              Email
-            </label>
+          <BigInput
+            label={'Email'}
+            type={'email'}
+            name={'email'}
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
 
-            <input
-              className={cn(css.input, font.poppins_regular)}
-              placeholder={'Your email here'}
-              name={'email'}
-              type={'email'}
-              value={email}
-              onChange={event => setEmail(event.target.value)}
-            />
-          </div>
-
-          <div className={css.field}>
-            <label className={cn(css.label, font.poppins_medium)}>
-              password
-            </label>
-
-            <input
-              className={cn(css.input, font.poppins_regular)}
-              placeholder={'Your password here'}
-              name={'password'}
-              type={'password'}
-              value={password}
-              onChange={event => setPassword(event.target.value)}
-            />
-          </div>
+          <BigInput
+            label={'Password'}
+            type={'password'}
+            name={'password'}
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+          />
 
           {type === 'registration' && (
-            <div className={css.field}>
-              <label className={cn(css.label, font.poppins_medium)}>
-                confirm password
-              </label>
-
-              <input
-                className={cn(css.input, font.poppins_regular)}
-                placeholder={'Your password here'}
-                name={'confirm'}
-                type={'password'}
-                value={confirm}
-                onChange={event => setConfirm(event.target.value)}
-              />
-            </div>
+            <BigInput
+              label={'Confirm password'}
+              type={'confirm'}
+              name={'confirm'}
+              value={confirm}
+              onChange={event => setConfirm(event.target.value)}
+            />
           )}
         </div>
 
         <div className={css.full_line}/>
 
         <div className={css.buttons}>
-          <button
-            className={css.item}
-          >
+          <button className={css.item}>
             Send
           </button>
 
-          {type === 'authorization' && <button
+          {type === 'authorization' && (
+            <button
               className={css.item}
               onClick={() => setType('registration')}
-          >
+            >
               To registration
-          </button>}
+            </button>
+          )}
 
-          {type === 'registration' && <button
+          {type === 'registration' && (
+            <button
               className={css.item}
               onClick={() => setType('authorization')}
-          >
+            >
               To authorization
-          </button>}
+            </button>
+          )}
         </div>
       </form>
     </div>

@@ -81,27 +81,3 @@
     gap: 24px;
 }
 
-.field {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-
-
-    .label {
-        font-size: 16px;
-    }
-
-    .input {
-        height: 75px;
-        border: 1px solid #9F9F9F;
-        border-radius: 10px;
-        font-size: 16px;
-        padding-left: 30px;
-
-        &::placeholder {
-            color: #9F9F9F;
-            padding-left: 1px;
-        }
-    }
-}
-

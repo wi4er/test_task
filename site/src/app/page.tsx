@@ -1,5 +1,6 @@
 import { ProductList } from '@/components/ProductList';
 import { ProductEntity } from '@/model/product.entity';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 
 export default async function Home() {
@@ -9,6 +10,16 @@ export default async function Home() {
 
   return (
     <div>
+      <Breadcrumbs
+        list={[{
+          name: 'Home',
+          link: '/',
+        }, {
+          name: 'Shop',
+          link: '/catalog',
+        }]}
+      />
+
       <ProductList list={productList}/>
     </div>
   );

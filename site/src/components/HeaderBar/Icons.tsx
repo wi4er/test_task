@@ -2,25 +2,43 @@
 
 import React from 'react';
 import css from './Icons.module.css';
+import font from '../../fonts/text-styles.module.css';
 import AccountSvg from './svg/account.svg';
+import LoginSvg from './svg/login.svg';
 import BasketSvg from './svg/basket.svg';
 import HeartSvg from './svg/heart.svg';
 import SearchSvg from './svg/search.svg';
 import { BasketPopup } from '@/components/BasketPopup';
 import { UserPopup } from '@/components/UserPopup';
+import { basketContext } from '@/context/BasketProvider';
+import cn from 'classnames';
+import { userContext } from '@/context/UserProvider';
+import Link from 'next/link';
 
 export function Icons() {
+  const {user} = React.useContext(userContext);
   const [basket, setBasket] = React.useState(false);
-  const [user, setUser] = React.useState(false);
+  const [editUser, setEditUser] = React.useState(false);
+  const {items} = React.useContext(basketContext);
 
   return (
     <div className={css.root}>
-      <button
-        className={css.item}
-        onClick={() => setUser(true)}
-      >
-        <AccountSvg/>
-      </button>
+      {user ? (
+        <Link
+          className={css.item}
+          href={'/personal'}
+          title={user.email}
+        >
+          <LoginSvg/>
+        </Link>
+      ) : (
+        <button
+          className={css.item}
+          onClick={() => setEditUser(true)}
+        >
+          <AccountSvg/>
+        </button>
+      )}
 
       <button className={css.item}>
         <HeartSvg/>
@@ -35,10 +53,14 @@ export function Icons() {
         onClick={() => setBasket(true)}
       >
         <BasketSvg/>
+
+        {items.length > 0 ? <div className={cn(css.count, font.poppins_bold)}>
+          {items.length}
+        </div> : null}
       </button>
 
       {basket && <BasketPopup onClose={() => setBasket(false)}/>}
-      {user && <UserPopup onClose={() => setUser(false)}/>}
+      {editUser && <UserPopup onClose={() => setEditUser(false)}/>}
     </div>
   );
 }

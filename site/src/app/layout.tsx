@@ -4,6 +4,8 @@ import './globals.css';
 import '../fonts/Poppins/stylesheet.css';
 import { HeaderBar } from '@/components/HeaderBar';
 import { FooterBar } from '@/components/FooterBar';
+import { BasketProvider } from '@/context/BasketProvider';
+import { UserProvider } from '@/context/UserProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,13 +22,17 @@ export default function RootLayout(
   return (
     <html lang="en">
     <body>
-    <HeaderBar/>
 
-    <main>
-      {children}
-    </main>
+    <UserProvider>
+      <BasketProvider>
+        <HeaderBar/>
+        <main>
+          {children}
+        </main>
+        <FooterBar/>
+      </BasketProvider>
+    </UserProvider>
 
-    <FooterBar/>
     </body>
     </html>
   );

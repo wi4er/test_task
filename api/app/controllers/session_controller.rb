@@ -4,16 +4,18 @@ class SessionController < ApplicationController
   def create
     # logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
-    user = User.find_by(email: params[:email])
+    @user = User.find_by(email: params[:email])
 
-    if user&.valid_password?(params[:password])
-      sign_in(user)
+    if @user&.valid_password?(params[:password])
+      sign_in(@user)
 
       render json: {
         status: true,
-        user: {
-          id: user.id,
-          email: user.email
+        data: {
+          id: @user.id,
+          email: @user.email,
+          first_name: @user.first_name,
+          last_name: @user.last_name,
         }
       }, status: :ok
     else

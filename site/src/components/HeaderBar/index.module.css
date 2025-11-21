@@ -1,6 +1,10 @@
 .root {
     display: flex;
+    position: sticky;
+    top: 0;
     align-items: center;
     height: 100px;
     padding: 0 100px 0 54px;
+    background-color: #FFF;
+    z-index: 50;
 }

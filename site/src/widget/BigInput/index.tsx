@@ -7,14 +7,14 @@ export function BigInput(
   {
     label,
     placeholder,
-    type,
+    type = 'string',
     name,
     value,
     onChange,
   }: {
     label: string;
     placeholder?: string;
-    type: string;
+    type?: string;
     name: string;
     value: string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;

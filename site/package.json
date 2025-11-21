@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm i && next dev",
+    "dev": "PORT=4040 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
@@ -12,8 +12,8 @@
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
     "classnames": "^2.5.1",
+    "framer-motion": "^12.23.24",
     "next": "16.0.3",
-    "next-svgr": "^0.0.2",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },

@@ -1,5 +1,5 @@
 import css from './index.module.css';
-import { ReactNode } from 'react';
+import { ElementType, ReactNode } from 'react';
 import { advantageList } from './mock/advantage-list';
 import { Item } from './Item';
 
@@ -11,7 +11,7 @@ export function Advantages(
       id: number;
       title: string;
       caption: string;
-      icon: ReactNode
+      icon: ElementType;
     }>
   },
 ) {

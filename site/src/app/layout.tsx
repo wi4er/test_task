@@ -6,6 +6,7 @@ import { HeaderBar } from '@/components/HeaderBar';
 import { FooterBar } from '@/components/FooterBar';
 import { BasketProvider } from '@/context/BasketProvider';
 import { UserProvider } from '@/context/UserProvider';
+import { ApiContext } from '@/context/ApiContext';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -23,17 +24,19 @@ export default function RootLayout(
     <html lang="en">
     <body>
 
-    <UserProvider>
-      <BasketProvider>
-        <HeaderBar/>
+    <ApiContext>
+      <UserProvider>
+        <BasketProvider>
+          <HeaderBar/>
 
-        <main>
-          {children}
-        </main>
+          <main>
+            {children}
+          </main>
 
-        <FooterBar/>
-      </BasketProvider>
-    </UserProvider>
+          <FooterBar/>
+        </BasketProvider>
+      </UserProvider>
+    </ApiContext>
 
     </body>
     </html>

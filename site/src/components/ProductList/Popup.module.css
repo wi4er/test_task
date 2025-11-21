@@ -1,0 +1,52 @@
+.substrate {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(58, 58, 58);
+    opacity: .72;
+    z-index: 5;
+}
+
+.popup {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buy {
+    cursor: pointer;
+
+    width: 202px;
+    height: 48px;
+    color: #B88E2F;
+    background-color: #FFF;
+    border: none;
+}
+
+.button_list {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+
+    .button {
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: #FFF;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+    }
+}

@@ -59,10 +59,26 @@ class SessionController < ApplicationController
   end
 
   def update
-    render json: {
-      status: true,
-      data: "DATA1"
-    }
+    @user = User.find(current_user.id)
+
+    @user&.update(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      password: params[:password],
+    )
+
+    if @user&.save
+      render json: {
+        status: true,
+        data: @user.as_json(only: [:id, :email, :last_name, :first_name, :created_at])
+      }
+    else
+      render json: {
+        status: false,
+        data: "Authorization required"
+      }, status: :unauthorized
+
+    end
   end
 
   def destroy

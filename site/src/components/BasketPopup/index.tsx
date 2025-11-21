@@ -30,7 +30,7 @@ export function BasketPopup(
         <div className={css.line}/>
 
         <div className={css.list}>
-          {list.map(item => <Item item={item}/>)}
+          {list.map(item => <Item key={item.id} item={item}/>)}
         </div>
 
         <div className={css.total}>

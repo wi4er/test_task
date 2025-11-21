@@ -1,0 +1,20 @@
+.root {
+    padding: 100px;
+
+
+}
+
+.title {
+    margin: 0;
+    font-size: 36px;
+
+    .name {
+        color: #B88E2F;
+    }
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

@@ -58,7 +58,7 @@ services:
     container_name: test-site
     image: node:24
     working_dir: /app
-    command: npm run dev
+    command: bash start.sh
     ports:
       - "3010:3000"
     volumes:

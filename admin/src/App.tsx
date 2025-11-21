@@ -12,7 +12,7 @@ import { OrderList } from './components/OrderList';
 function App() {
   return (
     <ApiContext>
-      <BrowserRouter>
+      <BrowserRouter basename="/admin">
         <UserContext>
           <HeaderBar/>
 

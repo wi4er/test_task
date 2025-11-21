@@ -1,3 +1,4 @@
+import React from 'react';
 import css from './index.module.css';
 import font from '../../fonts/text-styles.module.css';
 import imagePng from './image/bread.png';
@@ -26,13 +27,13 @@ export function Breadcrumbs(
 
       <div className={css.list}>
         {list.map((item, index) => (
-          <>
+          <React.Fragment key={item.name}>
             <Link href={item.link} className={cn(css.item, font.poppins_medium)}>
               {item.name}
             </Link>
 
             {index !== list.length - 1 ? <ArrowSvg /> : null}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>

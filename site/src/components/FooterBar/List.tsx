@@ -22,6 +22,7 @@ export function List(
         <Link
           className={cn(css.item, font.poppins_medium)}
           href={item.link}
+          key={item.id}
         >
           {item.name}
         </Link>

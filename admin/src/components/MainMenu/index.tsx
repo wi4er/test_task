@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import PersonIcon from '@mui/icons-material/Person';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import OrderIcon from '@mui/icons-material/ShoppingBag';
-import { Links, Link } from 'react-router';
+import { Link } from 'react-router';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export function MainMenu(

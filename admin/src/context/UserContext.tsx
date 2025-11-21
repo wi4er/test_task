@@ -2,8 +2,11 @@ import css from './UserContext.module.css';
 import React from 'react';
 import { AuthForm } from '../components/AuthForm';
 import { apiContext } from './ApiContext';
+import { UserEntity } from '../model/User.entity';
 
-export const userContext = React.createContext<any>({});
+export const userContext = React.createContext<{
+  user: UserEntity,
+} | any>({});
 
 export function UserContext(
   {
@@ -13,33 +16,30 @@ export function UserContext(
   },
 ) {
   const {fetchData, postData, deleteData} = React.useContext(apiContext);
-  const [user, setUser] = React.useReducer((state: any, action: any) => {
-
-    return action.user;
-  }, undefined);
+  const [user, setUser] = React.useState(null);
+  const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
     fetchData('session/me').then((res: any) => {
-      if (res.status) setUser({user: res.data})
-      else setUser({user: null});
+      if (res.status) setUser(res.data)
+      else setUser(null);
     });
   }, []);
 
   return (
     <userContext.Provider value={{
       user,
+      error,
       fetchUser: (email: string, password: string) => {
         postData('session/sign_in', {email, password}).then((res: any) => {
-          if (res.status) setUser({user: res.user});
+          if (res.status) setUser(res.data)
+          else setError(res.error);
         });
       },
       logout: () => {
         deleteData('session/sign_out').then((res: any) => {
-          console.log(res);
-
-          if (res.status) {
-            setUser({user: null});
-          }
+          if (res.status) setUser(null)
+          else setError(res.error);
         });
       },
     }}>

@@ -13,9 +13,21 @@ function authUser(email: string, password: string) {
     headers: {
       'content-type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({
       email, password,
     }),
+  }).then(res => res.json());
+}
+
+function registerUser(email: string, password: string) {
+  return fetch('/api/session/register', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({email, password}),
   }).then(res => res.json());
 }
 
@@ -37,6 +49,13 @@ export function UserPopup(
 
     if (type === 'authorization') {
       authUser(email, password).then(res => {
+        if (res.status) {
+          setUser(res.data);
+          onClose();
+        }
+      });
+    } else {
+      registerUser(email, password).then(res => {
         if (res.status) {
           setUser(res.data);
           onClose();

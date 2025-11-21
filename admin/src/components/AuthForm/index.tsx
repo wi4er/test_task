@@ -10,11 +10,11 @@ import TextField from '@mui/material/TextField';
 import { userContext } from '../../context/UserContext';
 
 export function AuthForm() {
-  const {user, fetchUser} = React.useContext(userContext);
+  const {user, fetchUser, error} = React.useContext(userContext);
   const [login, setLogin] = React.useState('333@ukr.net');
   const [password, setPassword] = React.useState('qwerty');
 
-
+  console.log(error);
   return (
     <div className={css.root}>
       <Dialog
@@ -44,6 +44,9 @@ export function AuthForm() {
               fullWidth
               variant="standard"
               value={login}
+              onChange={event => setLogin(event.target.value)}
+              error={error}
+              helperText={error}
             />
 
             <TextField
@@ -57,12 +60,12 @@ export function AuthForm() {
               fullWidth
               variant="standard"
               value={password}
+              onChange={event => setPassword(event.target.value)}
             />
           </form>
         </DialogContent>
 
         <DialogActions>
-          <Button>Cancel</Button>
           <Button type="submit" form="subscription-form">
             Send
           </Button>

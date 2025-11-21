@@ -1,6 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "localhost:3001"   # <-- или твой домен
+    origins "localhost:4000"
 
     resource "*",
              headers: :any,

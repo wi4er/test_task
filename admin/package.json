@@ -24,7 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=4000 react-scripts start",
     "build": "npm i && react-scripts build " ,
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/admin"
+  "homepage": "/admin/"
 }

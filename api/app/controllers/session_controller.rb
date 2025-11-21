@@ -12,10 +12,10 @@ class SessionController < ApplicationController
       render json: {
         status: true,
         data: {
-          id: @user.id,
-          email: @user.email,
-          first_name: @user.first_name,
-          last_name: @user.last_name,
+          id: @user&.id,
+          email: @user&.email,
+          first_name: @user&.first_name,
+          last_name: @user&.last_name,
         }
       }, status: :ok
     else
@@ -26,10 +26,42 @@ class SessionController < ApplicationController
     end
   end
 
+  def register
+    @user = User.new(
+      email: params[:email],
+      password: params[:password],
+      role: "user"
+    )
+
+    if @user&.save
+      sign_in(@user)
+
+      render json: {
+        status: true,
+        data: {
+          id: @user&.id,
+          email: @user&.email,
+        }
+      }, status: :ok
+    else
+      render json: {
+        status: false,
+        error: @user&.errors
+      }, status: :bad_request
+    end
+  end
+
   def me
     render json: {
       status: !!current_user,
       data: current_user.as_json(only: [:id, :email, :last_name, :first_name, :created_at])
+    }
+  end
+
+  def update
+    render json: {
+      status: true,
+      data: "DATA1"
     }
   end
 

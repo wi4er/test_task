@@ -1,5 +1,3 @@
-version: "2.2"
-
 services:
   frontend:
     container_name: test-frontend
@@ -55,11 +53,14 @@ services:
     ports:
       - "3030:3000"
 
+
   site:
     container_name: test-site
     image: node:24
     working_dir: /app
     command: npm run dev
+    ports:
+      - "3010:3000"
     volumes:
       - ./site:/app
     links:

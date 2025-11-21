@@ -1,8 +1,9 @@
+import { UserForm } from '@/components/UserForm';
 
 export default function PersonalPage() {
   return (
     <div>
-      PERSONAL
+      <UserForm/>
     </div>
   );
 }

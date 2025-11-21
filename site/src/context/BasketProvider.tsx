@@ -27,10 +27,6 @@ export function BasketProvider(
     const basket = JSON.parse(localStorage.getItem('basket') ?? '[]')
 
     dispatch({type: 'INIT', data: basket});
-
-    return () => {
-      localStorage.setItem('basket', JSON.stringify(items));
-    };
   }, []);
 
   return (

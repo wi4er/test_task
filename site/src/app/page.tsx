@@ -1,6 +1,7 @@
 import { ProductList } from '@/components/ProductList';
 import { ProductEntity } from '@/model/product.entity';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { Advantages } from '@/components/Advantages';
 
 
 export default async function Home() {
@@ -21,6 +22,8 @@ export default async function Home() {
       />
 
       <ProductList list={productList}/>
+
+      <Advantages />
     </div>
   );
 }

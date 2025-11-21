@@ -1,0 +1,28 @@
+.root {
+
+    display: grid;
+    grid-template:
+    "icon   .    title  "
+    "icon   .    .      " 2px
+    "icon   .    caption"
+    /auto   10px 1fr;
+    align-items: center;
+}
+
+.icon {
+    grid-area: icon;
+}
+
+.title {
+    grid-area: title;
+    font-size: 25px;
+    color: #242424;
+    line-height: 150%;
+}
+
+.caption {
+    grid-area: caption;
+    font-size: 20px;
+    color: #898989;
+    line-height: 150%;
+}

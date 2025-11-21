@@ -1,0 +1,22 @@
+.root {
+    display: flex;
+    gap: 11px;
+    /*align-items: start;*/
+    height: 24px;
+    width: 286px;
+}
+
+.input {
+    flex: 1;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 3px 0;
+}
+
+.button {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #000;
+    font-size: 14px;
+}

@@ -1,0 +1,9 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 46px;
+}
+
+.item {
+    font-size: 16px;
+}

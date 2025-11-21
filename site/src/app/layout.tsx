@@ -26,9 +26,11 @@ export default function RootLayout(
     <UserProvider>
       <BasketProvider>
         <HeaderBar/>
+
         <main>
           {children}
         </main>
+
         <FooterBar/>
       </BasketProvider>
     </UserProvider>

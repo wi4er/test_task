@@ -1,0 +1,67 @@
+.root {
+    display: grid;
+    border-top: 1px solid rgba(0, 0, 0, 0.17);
+    grid-template:
+    ".     .       .      .      .     .      .     .      .    " 48px
+    ".     logo    .      links  .     help   .     news   .    "
+    ".     .       .      .      .     .      .     .      .    " 50px
+    ".     address .      llist  .     hlist  .     nform  .    "
+    ".     .       .      .      .     .      .     .      .    " 48px
+    ".     line    line   line   line  line   line  line   .    " 1px
+    ".     .       .      .      .     .      .     .      .    " 35px
+    ".     rights  rights .      .     .      .     .      .    "
+    ".     .       .      .      .     .      .     .      .    " 88px
+    /100px auto    auto   auto   auto  auto   auto  auto   100px;
+}
+
+.logo {
+    grid-area: logo;
+    font-size: 24px;
+}
+
+.address {
+    grid-area: address;
+    color: #9F9F9F;
+    font-size: 16px;
+    max-width: 300px;
+}
+
+.links {
+    grid-area: links;
+    color: #9F9F9F;
+    font-size: 16px;
+}
+
+.link_list {
+    grid-area: llist;
+}
+
+.help {
+    grid-area: help;
+    color: #9F9F9F;
+    font-size: 16px;
+}
+
+.help_list {
+    grid-area: hlist;
+}
+
+.news {
+    grid-area: news;
+    color: #9F9F9F;
+    font-size: 16px;
+}
+
+.news_form {
+    grid-area: nform;
+}
+
+.line {
+    grid-area: line;
+    background-color: #D9D9D9;
+}
+
+.rights {
+    grid-area: rights;
+    font-size: 16px;
+}

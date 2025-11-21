@@ -6,7 +6,12 @@ import { Advantages } from '@/components/Advantages';
 const host = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'http://api:3000';
 
 export default async function Home() {
-  const productList: Array<ProductEntity> = await fetch(`${host}/items`).then(res => res.json()).then(res => {
+  const productList: Array<ProductEntity> = await fetch(
+    `${host}/items`,
+    {cache: 'no-store'},
+  ).then(res => res.json()).then(res => {
+    console.log(res);
+
     return res.data;
   });
 
@@ -18,13 +23,13 @@ export default async function Home() {
           link: '/',
         }, {
           name: 'Shop',
-          link: '/catalog',
+          link: '/',
         }]}
       />
 
       <ProductList list={productList}/>
 
-      <Advantages />
+      <Advantages/>
     </div>
   );
 }

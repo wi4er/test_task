@@ -1,4 +1,5 @@
 import css from './Buttons.module.css';
+import font from '../../fonts/text-styles.module.css';
 import cn from 'classnames';
 import Link from 'next/link';
 
@@ -12,7 +13,7 @@ export function Buttons(
   }
 ) {
   return (
-    <div className={cn(css.root, className)}>
+    <div className={cn(css.root, className, font.poppins_regular)}>
       <Link
         className={css.item}
         href={'/basket'}

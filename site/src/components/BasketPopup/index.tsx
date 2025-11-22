@@ -1,36 +1,68 @@
+import React from 'react';
 import css from './index.module.css';
 import font from '../../fonts/text-styles.module.css';
 import cn from 'classnames';
 import { Buttons } from '@/components/BasketPopup/Buttons';
 import { Item } from '@/components/BasketPopup/Item';
-import { BasketEntity } from '@/model/basket.entity';
-import { basketList } from '@/components/BasketPopup/mock/basket-list';
+import { basketContext } from '@/context/BasketProvider';
+import { apiContext } from '@/context/ApiContext';
+import { ProductEntity } from '@/model/product.entity';
+import CloseSvg from './svg/Close.svg';
+import { popupContext } from '@/context/PopupProvider';
 
-export function BasketPopup(
-  {
-    onClose,
-    list = basketList,
-  }: {
-    onClose: () => void;
-    list?: Array<BasketEntity>,
-  },
-) {
+export interface BasketItem {
+  id: number;
+  product: ProductEntity;
+  count: number;
+}
+
+export function BasketPopup() {
+  const {closePopup} = React.useContext(popupContext);
+  const {items} = React.useContext(basketContext);
+  const {getData} = React.useContext(apiContext);
+  const [basket, setBasket] = React.useState<Array<BasketItem>>([]);
+
+  React.useEffect(() => {
+    getData<ProductEntity>('items').then(res => {
+      const result = []
+
+      if (res.status) {
+        for (const basketItem of items) {
+          for (const productItem of res.data) {
+            if (basketItem.id === productItem.id) {
+              result.push({
+                id: basketItem.id,
+                product: productItem,
+                count: basketItem.count,
+              })
+            }
+          }
+        }
+
+        setBasket(result);
+      }
+    })
+  }, [items]);
+
+
   return (
     <div className={css.root}>
-      <div
-        className={css.substrate}
-        onClick={onClose}
-      />
-
       <div className={css.basket}>
         <div className={cn(css.title, font.poppins_semi_bold)}>
-          Shopping Cart
+          <div className={css.text}>
+            Shopping Cart
+          </div>
+
+          <CloseSvg
+            className={css.close}
+            onClick={() => closePopup()}
+          />
         </div>
 
         <div className={css.line}/>
 
         <div className={css.list}>
-          {list.map(item => <Item key={item.id} item={item}/>)}
+          {basket.map(item => <Item key={item.product.id} item={item}/>)}
         </div>
 
         <div className={css.total}>
@@ -47,7 +79,7 @@ export function BasketPopup(
 
         <Buttons
           className={css.buttons}
-          onClose={onClose}
+          onClose={closePopup}
         />
       </div>
     </div>

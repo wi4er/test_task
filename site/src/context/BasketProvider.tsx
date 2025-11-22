@@ -2,7 +2,13 @@
 
 import React, { ReactNode } from 'react';
 
-export const basketContext = React.createContext<any>({value: 'default'});
+export interface BasketData {
+
+  items: Array<{ id: number, count: number }>;
+  dispatch: (action: any) => void;
+}
+
+export const basketContext = React.createContext<BasketData>({} as BasketData);
 
 export function BasketProvider(
   {
@@ -18,13 +24,37 @@ export function BasketProvider(
         return action.data;
 
       case 'ADD':
-        localStorage.setItem('basket', JSON.stringify([...state, {id: action.product, count: 1}]));
+        for (const key in state) {
+          if (state[key].id === action.product) {
+            const updated = [...state];
+            updated[key] = {
+              id: state[key].id,
+              count: state[key].count + 1,
+            }
+
+            localStorage.setItem('basket', JSON.stringify(updated));
+            return updated;
+          }
+        }
+
         return [...state, {id: action.product, count: 1}];
+
+      case 'REMOVE':
+        for (const key in state) {
+          if (state[key].id === action.id) {
+            const updated = [...state];
+            updated.splice(+key, 1);
+
+            localStorage.setItem('basket', JSON.stringify(updated));
+            return updated;
+          }
+        }
+        break;
     }
   }, []);
 
   React.useEffect(() => {
-    const basket = JSON.parse(localStorage.getItem('basket') ?? '[]')
+    const basket = JSON.parse(localStorage.getItem('basket') ?? '[]');
 
     dispatch({type: 'INIT', data: basket});
   }, []);

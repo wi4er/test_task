@@ -14,11 +14,11 @@ import { basketContext } from '@/context/BasketProvider';
 import cn from 'classnames';
 import { userContext } from '@/context/UserProvider';
 import Link from 'next/link';
+import { popupContext } from '@/context/PopupProvider';
 
 export function Icons() {
   const {user} = React.useContext(userContext);
-  const [basket, setBasket] = React.useState(false);
-  const [editUser, setEditUser] = React.useState(false);
+  const {openPopup} = React.useContext(popupContext);
   const {items} = React.useContext(basketContext);
 
   return (
@@ -34,7 +34,9 @@ export function Icons() {
       ) : (
         <button
           className={css.item}
-          onClick={() => setEditUser(true)}
+          onClick={() => openPopup({
+            element: <UserPopup />,
+          })}
         >
           <AccountSvg/>
         </button>
@@ -50,7 +52,9 @@ export function Icons() {
 
       <button
         className={css.item}
-        onClick={() => setBasket(true)}
+        onClick={() => openPopup({
+          element: <BasketPopup />,
+        })}
       >
         <BasketSvg/>
 
@@ -58,12 +62,6 @@ export function Icons() {
           {items.length}
         </div> : null}
       </button>
-
-      {basket && <BasketPopup onClose={() => setBasket(false)}/>}
-      <UserPopup
-        open={editUser}
-        onClose={() => setEditUser(false)}
-      />
     </div>
   );
 }

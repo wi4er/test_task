@@ -3,20 +3,22 @@
 import css from './ApiContext.module.css';
 import React, { ReactNode } from 'react';
 
-export const apiContext = React.createContext<{
+interface ApiType {
   getData: <T>(url: string) => Promise<
-    { status: true; data: T; }
+    { status: true; data: Array<T>; }
     | { status: false, error: any }
-  >,
+  >;
   postData: <T>(url: string, data: Object) => Promise<
     { status: true; data: T; }
     | { status: false, error: any }
-  >,
+  >;
   putData: <T>(url: string, data: Object) => Promise<
     { status: true; data: T; }
     | { status: false, error: any }
-  >,
-} | undefined>(undefined);
+  >;
+}
+
+export const apiContext = React.createContext<ApiType>({} as ApiType);
 
 const host = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '/api';
 

@@ -1,8 +1,6 @@
 .root {
-    position: fixed;
     top: 0;
     right: 0;
-    z-index: 100;
 }
 
 .substrate {
@@ -41,6 +39,18 @@
 .title {
     grid-area: title;
     font-size: 24px;
+    display: flex;
+    align-items: center;
+    padding: 0 9px 0 12px;
+
+    .text {
+        flex: 1;
+        letter-spacing: 0.1px;
+    }
+
+    .close {
+        cursor: pointer;
+    }
 }
 
 .line {
@@ -51,6 +61,7 @@
 
 .list {
     grid-area: list;
+    overflow: scroll;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -61,6 +72,7 @@
     display: flex;
 
     .label {
+        padding-left: 4px;
         font-size: 16px;
     }
 

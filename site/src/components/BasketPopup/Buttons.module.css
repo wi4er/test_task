@@ -2,11 +2,13 @@
 .root {
     display: flex;
     gap: 14px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
 
 .item {
     cursor: pointer;
-    padding: 6px 30px;
+    padding: 5px 28px;
     border-radius: 15px;
     background-color: #FFF;
     border: 1px solid #000;

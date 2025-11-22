@@ -1,10 +1,8 @@
 import React from 'react';
 import css from './Card.module.css';
 import { ProductEntity } from '@/model/product.entity';
-import imagePng from './mock/image.png';
 import cn from 'classnames';
 import font from '../../fonts/text-styles.module.css';
-import { basketContext } from '@/context/BasketProvider';
 import { Popup } from '@/components/ProductList/Popup';
 
 export function Card(
@@ -23,7 +21,7 @@ export function Card(
       onMouseLeave={() => setHover(false)}
     >
       <picture className={css.image}>
-        <img src={imagePng.src}/>
+        <img src={item.image}/>
       </picture>
 
       <div className={cn(css.title, font.poppins_semi_bold)}>

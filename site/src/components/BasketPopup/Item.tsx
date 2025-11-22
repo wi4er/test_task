@@ -17,11 +17,8 @@ export function Item(
 
   return (
     <div className={css.root}>
-      <picture>
-        <img
-          src={item.product.image}
-          className={css.image}
-        />
+      <picture className={css.image}>
+        <img src={item.product.image} />
       </picture>
 
       <div className={cn(css.title, font.poppins_regular)}>

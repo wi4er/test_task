@@ -26,16 +26,17 @@ export function ProductForm(
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [price, setPrice] = React.useState(0);
+  const [image, setImage] = React.useState('');
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     if (productId) {
-      putData(`items/${productId}`, {name, description, price}).then((res: any) => {
+      putData(`items/${productId}`, {name, description, price, image}).then((res: any) => {
         if (res.status) handleClose();
       });
     } else {
-      postData('items', {name, description, price}).then((res: any) => {
+      postData('items', {name, description, price, image}).then((res: any) => {
         if (res.status) handleClose();
       });
     }
@@ -48,6 +49,7 @@ export function ProductForm(
         setName(res.data.name);
         setDescription(res.data.description);
         setPrice(res.data.price);
+        setImage(res.data.image);
       });
     }
   }, [productId]);
@@ -101,14 +103,25 @@ export function ProductForm(
 
           <TextField
             margin="dense"
-            id="description"
-            name="description"
-            label="Descrioption"
+            id="price"
+            name="price"
+            label="Price"
             fullWidth
             type={'number'}
             variant="standard"
             value={price}
             onChange={event => setPrice(+event.target.value)}
+          />
+
+          <TextField
+            margin="dense"
+            id="image"
+            name="image"
+            label="Image"
+            fullWidth
+            variant="standard"
+            value={image}
+            onChange={event => setImage(event.target.value)}
           />
         </form>
       </DialogContent>
@@ -116,7 +129,7 @@ export function ProductForm(
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button type="submit" form="subscription-form">
-          {!!productId ? 'Save' : "Create"}
+          {!!productId ? 'Save' : 'Create'}
         </Button>
       </DialogActions>
     </Dialog>

@@ -4,9 +4,26 @@ import { AuthForm } from '../components/AuthForm';
 import { apiContext } from './ApiContext';
 import { UserEntity } from '../model/User.entity';
 
-export const userContext = React.createContext<{
-  user: UserEntity,
-} | any>({});
+
+export interface UserData {
+  user: UserEntity | null | undefined,
+  error: any,
+  fetchUser: (email: string, password: string) => Promise<{
+    status: true;
+    data: UserEntity;
+  } | {
+    status: false;
+    error: any;
+  }>
+
+  logout: () => Promise<{
+    status: true;
+  } | {
+    status: false;
+  }>
+}
+
+export const userContext = React.createContext<UserData>({} as UserData);
 
 export function UserContext(
   {
@@ -16,12 +33,12 @@ export function UserContext(
   },
 ) {
   const {fetchData, postData, deleteData} = React.useContext(apiContext);
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState<UserEntity | null | undefined>(undefined);
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
     fetchData('session/me').then((res: any) => {
-      if (res.status) setUser(res.data)
+      if (res.status) setUser(res.data);
       else setUser(null);
     });
   }, []);
@@ -31,19 +48,20 @@ export function UserContext(
       user,
       error,
       fetchUser: (email: string, password: string) => {
-        postData('session/sign_in', {email, password}).then((res: any) => {
-          if (res.status) setUser(res.data)
+        return postData('session/sign_in', {email, password}).then((res: any) => {
+          if (res.status) setUser(res.data);
           else setError(res.error);
         });
       },
       logout: () => {
-        deleteData('session/sign_out').then((res: any) => {
-          if (res.status) setUser(null)
+        return deleteData('session/sign_out').then((res: any) => {
+          if (res.status) setUser(null);
           else setError(res.error);
         });
       },
     }}>
-      {user ? children : <AuthForm />}
+      {user === null ? <AuthForm/> : null}
+      {user ? children : null}
     </userContext.Provider>
   );
 }

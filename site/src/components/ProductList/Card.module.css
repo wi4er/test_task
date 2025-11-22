@@ -6,7 +6,7 @@
 
     display: grid;
     grid-template:
-    "image   image   image" 1fr
+    "image   image   image" 300px
     ".       .       .    " 16px
     ".       title   .    "
     ".       .       .    " 8px
@@ -20,10 +20,12 @@
 .image {
     grid-area: image;
     display: flex;
-    align-items: center;
     justify-content: center;
+    /*align-items: center;*/
+    /*background-color: #FFF;*/
 
     & img {
+        object-fit: contain;
         max-width: 100%;
     }
 }

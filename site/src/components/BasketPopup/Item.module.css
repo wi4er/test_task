@@ -12,6 +12,12 @@
 
 .image {
     grid-area: image;
+    display: flex;
+    align-items: center;
+
+    img {
+        max-width: 100%;
+    }
 }
 
 .title {

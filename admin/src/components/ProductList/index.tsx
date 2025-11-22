@@ -103,6 +103,12 @@ export function ProductList() {
             editable: true,
           },
           {
+            field: 'image',
+            headerName: 'Image',
+            width: 150,
+            editable: true,
+          },
+          {
             field: 'price',
             headerName: 'Price',
             width: 150,

@@ -6,14 +6,14 @@ class ItemsController < ApplicationController
   def index
     render json: {
       status: true,
-      data: Item.order(updated_at: :desc).all
+      data: Item.order(updated_at: :desc).all.as_json(only: [:id, :name, :description, :price, :image, :created_at])
     }
   end
 
   def show
     render json: {
       status: true,
-      data: Item.find(params[:id])
+      data: Item.find(params[:id]).as_json(only: [:id, :name, :description, :price, :image, :created_at])
     }
   end
 
@@ -21,17 +21,14 @@ class ItemsController < ApplicationController
     @item = Item.new(
       name: params[:name],
       description: params[:description],
-      price: params[:price]
+      price: params[:price],
+      image: params[:image]
     )
 
     if @item.save
       render json: {
         status: true,
-        data: {
-          name: @item.name,
-          description: @item.description,
-          price: @item.price
-        }
+        data: @item.as_json(only: [:id, :name, :description, :price, :image, :created_at])
       }
     else
       render json: {
@@ -47,15 +44,12 @@ class ItemsController < ApplicationController
     if @item.update(
       name: params[:name],
       description: params[:description],
-      price: params[:price]
+      price: params[:price],
+      image: params[:image]
     )
       render json: {
         status: true,
-        data: {
-          name: @item.name,
-          description: @item.description,
-          price: @item.price
-        }
+        data:  @item.as_json(only: [:id, :name, :description, :price, :image, :created_at])
       }
     else
       render json: {

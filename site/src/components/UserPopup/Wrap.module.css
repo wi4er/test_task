@@ -1,0 +1,24 @@
+.root {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+
+    width: 417px;
+    height: 676px;
+    background-color: #FFF;
+
+    .inner {
+        /*background-color: #730E15;*/
+        height: 100%;
+    }
+}
+
+.substrate {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0);
+}

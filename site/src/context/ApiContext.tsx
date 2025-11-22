@@ -3,8 +3,20 @@
 import css from './ApiContext.module.css';
 import React, { ReactNode } from 'react';
 
-export const apiContext = React.createContext<any>({});
-
+export const apiContext = React.createContext<{
+  getData: <T>(url: string) => Promise<
+    { status: true; data: T; }
+    | { status: false, error: any }
+  >,
+  postData: <T>(url: string, data: Object) => Promise<
+    { status: true; data: T; }
+    | { status: false, error: any }
+  >,
+  putData: <T>(url: string, data: Object) => Promise<
+    { status: true; data: T; }
+    | { status: false, error: any }
+  >,
+} | undefined>(undefined);
 
 const host = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '/api';
 
@@ -17,12 +29,12 @@ export function ApiContext(
 ) {
   return (
     <apiContext.Provider value={{
-      getData: (url: string) => {
+      getData<T>(url: string) {
         return fetch(`${host}/${url}`, {
           credentials: 'include',
         }).then(res => res.json());
       },
-      postData: (url: string, data: Object) => {
+      postData<T>(url: string, data: Object) {
         return fetch(`${host}/${url}`, {
           method: 'POST',
           credentials: 'include',
@@ -30,9 +42,9 @@ export function ApiContext(
             'content-type': 'application/json',
           },
           body: JSON.stringify(data),
-        }).then(res => res.json());
+        }).then<T>(res => res.json());
       },
-      putData: (url: string, data: Object) => {
+      putData<T>(url: string, data: Object) {
         return fetch(`${host}/${url}`, {
           method: 'PUT',
           credentials: 'include',
@@ -40,7 +52,7 @@ export function ApiContext(
             'content-type': 'application/json',
           },
           body: JSON.stringify(data),
-        }).then(res => res.json());
+        }).then<T>(res => res.json());
       },
     }}>
       {children}

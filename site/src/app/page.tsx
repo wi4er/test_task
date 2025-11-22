@@ -10,8 +10,6 @@ export default async function Home() {
     `${host}/items`,
     {cache: 'no-store'},
   ).then(res => res.json()).then(res => {
-    console.log(res);
-
     return res.data;
   });
 

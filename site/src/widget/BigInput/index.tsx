@@ -30,7 +30,7 @@ export function BigInput(
         className={cn(css.input, font.poppins_regular)}
         placeholder={placeholder || label}
         name={name}
-        type={name}
+        type={type}
         value={value}
         onChange={onChange}
       />

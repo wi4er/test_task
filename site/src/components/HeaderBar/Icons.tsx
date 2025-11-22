@@ -60,7 +60,10 @@ export function Icons() {
       </button>
 
       {basket && <BasketPopup onClose={() => setBasket(false)}/>}
-      {editUser && <UserPopup onClose={() => setEditUser(false)}/>}
+      <UserPopup
+        open={editUser}
+        onClose={() => setEditUser(false)}
+      />
     </div>
   );
 }

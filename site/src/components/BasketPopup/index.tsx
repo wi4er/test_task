@@ -3,12 +3,12 @@ import css from './index.module.css';
 import font from '../../fonts/text-styles.module.css';
 import cn from 'classnames';
 import { Buttons } from '@/components/BasketPopup/Buttons';
-import { Item } from '@/components/BasketPopup/Item';
 import { basketContext } from '@/context/BasketProvider';
 import { apiContext } from '@/context/ApiContext';
 import { ProductEntity } from '@/model/product.entity';
 import CloseSvg from './svg/Close.svg';
 import { popupContext } from '@/context/PopupProvider';
+import { SmallCard } from '@/widget/SmallCard';
 
 export interface BasketItem {
   id: number;
@@ -18,7 +18,7 @@ export interface BasketItem {
 
 export function BasketPopup() {
   const {closePopup} = React.useContext(popupContext);
-  const {items} = React.useContext(basketContext);
+  const {items, dispatch} = React.useContext(basketContext);
   const {getData} = React.useContext(apiContext);
   const [basket, setBasket] = React.useState<Array<BasketItem>>([]);
 
@@ -62,7 +62,15 @@ export function BasketPopup() {
         <div className={css.line}/>
 
         <div className={css.list}>
-          {basket.map(item => <Item key={item.product.id} item={item}/>)}
+          {basket.map(item => (
+            <SmallCard
+              key={item.product.id}
+              product={item.product}
+              quantity={item.count}
+              onEdit={event => dispatch({type: 'SET', product: item.id, count: +event.target.value})}
+              onDelete={() => dispatch({type: 'REMOVE', id: item.id})}
+            />
+          ))}
         </div>
 
         <div className={css.total}>

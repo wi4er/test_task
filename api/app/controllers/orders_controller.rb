@@ -5,15 +5,32 @@ class OrdersController < ApplicationController
   def index
     render json: {
       status: true,
-      data: Order.all
-    }, include: :order_description
+      data: Order.order(updated_at: :desc).all.as_json(
+        include: {
+          order_description: {
+            include: :item
+          }
+        }
+      )
+    }
   end
 
   def mine
+    @list = Order
+              .order(updated_at: :desc)
+              .includes(order_description: :item)
+              .where(user_id: current_user.id)
+
     render json: {
       status: true,
-      data: Order.where(user_id: current_user.id)
-    }, include: :order_description, OrderDescription:item
+      data: @list.as_json(
+        include: {
+          order_description: {
+            include: :item
+          }
+        }
+      )
+    }
   end
 
   def create

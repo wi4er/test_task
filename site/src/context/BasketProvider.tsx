@@ -48,6 +48,23 @@ export function BasketProvider(
         localStorage.setItem('basket', JSON.stringify([...state, {id: action.product, count: 1}]));
         return [...state, {id: action.product, count: 1}];
 
+      case 'SET':
+        for (const key in state) {
+          if (state[key].id === action.product) {
+            const updated = [...state];
+            updated[key] = {
+              id: state[key].id,
+              count: action.count,
+            };
+
+            console.log(updated);
+            localStorage.setItem('basket', JSON.stringify(updated));
+            return updated;
+          }
+        }
+
+        return state;
+
       case 'REMOVE':
         for (const key in state) {
           if (state[key].id === action.id) {

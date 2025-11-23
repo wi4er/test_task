@@ -9,6 +9,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ShareSvg from './svg/share.svg';
 import CompareSvg from './svg/compare.svg';
 import HeartSvg from './svg/Heart.svg';
+import { popupContext } from '@/context/PopupProvider';
+import { BasketPopup } from '@/components/BasketPopup';
 
 export function Popup(
   {
@@ -20,6 +22,7 @@ export function Popup(
   },
 ) {
   const {dispatch} = React.useContext(basketContext);
+  const {openPopup} = React.useContext(popupContext);
 
   return (
     <>
@@ -45,7 +48,10 @@ export function Popup(
         >
           <button
             className={cn(css.buy, font.poppins_semi_bold)}
-            onClick={() => dispatch({type: 'ADD', product: id})}
+            onClick={() => {
+              dispatch({type: 'ADD', product: id});
+              openPopup({element: <BasketPopup />})
+            }}
           >
             Add to cart
           </button>

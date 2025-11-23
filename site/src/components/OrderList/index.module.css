@@ -1,0 +1,10 @@
+.root {
+    padding: 63px 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.title {
+    font-size: 36px;
+}

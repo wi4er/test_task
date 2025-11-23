@@ -49,7 +49,7 @@ class ItemsController < ApplicationController
     )
       render json: {
         status: true,
-        data:  @item.as_json(only: [:id, :name, :description, :price, :image, :created_at])
+        data: @item.as_json(only: [:id, :name, :description, :price, :image, :created_at])
       }
     else
       render json: {

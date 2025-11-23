@@ -1,0 +1,31 @@
+
+.root {
+
+    display: flex;
+    gap: 26px;
+    align-items: center;
+}
+
+.created {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 200px;
+}
+
+.date {
+    font-size: 20px;
+    color: #B88E2F;
+    /*max-width: 200px;*/
+    flex: 1;
+}
+
+.amount {
+}
+
+.list {
+    display: flex;
+    gap: 20px;
+    overflow: scroll;
+}

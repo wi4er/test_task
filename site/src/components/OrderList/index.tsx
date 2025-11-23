@@ -1,40 +1,32 @@
 'use client';
 
-import css from './index.module.css';
 import React from 'react';
+import css from './index.module.css';
+import font from '../../fonts/text-styles.module.css';
 import { apiContext } from '@/context/ApiContext';
 import { OrderEntity } from '@/model/order.entity';
 import { Item } from '@/components/OrderList/Item';
-import { ProductEntity } from '@/model/product.entity';
+import cn from 'classnames';
 
 export function OrderList() {
   const {getData} = React.useContext(apiContext);
   const [orders, setOrders] = React.useState<Array<OrderEntity>>([]);
-  const [items, setItems] = React.useState<{[key: string]: ProductEntity}>({});
 
   React.useEffect(() => {
-    getData<OrderEntity>('orders').then(res => {
+    getData<OrderEntity>('orders/mine').then(res => {
       if (res.status) setOrders(res.data);
-    }).then(() => getData<ProductEntity>('items').then(res => {
-      if (res.status) {
-        const data: {[key: string]: ProductEntity} = {};
-
-        for (const it of res.data) {
-          data[String(it.id)] = it;
-        }
-
-        setItems(data);
-      }
-    }));
+    });
   }, []);
 
-  console.log(items);
   return (
     <div className={css.root}>
+      <h1 className={cn(css.title, font.poppins_semi_bold)}>
+        Order list
+      </h1>
+
       {orders.map(item => (
         <Item
           item={item}
-          product={items[String(item.id)]}
           key={item.id}
         />
       ))}

@@ -54,7 +54,7 @@ class SessionController < ApplicationController
   def me
     render json: {
       status: !!current_user,
-      data: current_user.as_json(only: [:id, :email, :last_name, :first_name, :created_at])
+      data: current_user.as_json(only: [:id, :email, :last_name, :first_name, :created_at, :role])
     }
   end
 

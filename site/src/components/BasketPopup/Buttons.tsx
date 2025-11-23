@@ -20,14 +20,6 @@ export function Buttons(
 
   return (
     <div className={cn(css.root, className, font.poppins_regular)}>
-      <Link
-        className={css.item}
-        href={'/basket'}
-        onClick={onClose}
-      >
-        Cart
-      </Link>
-
       <button
         className={css.item}
         onClick={() => {
@@ -40,9 +32,17 @@ export function Buttons(
         Checkout
       </button>
 
-      <button className={css.item}>
-        Comparison
-      </button>
+      <Link
+        className={css.item}
+        href={'/orders'}
+        onClick={onClose}
+      >
+        Orders
+      </Link>
+
+      {/*<button className={css.item}>*/}
+      {/*  Comparison*/}
+      {/*</button>*/}
     </div>
   );
 }

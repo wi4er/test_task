@@ -38,8 +38,13 @@ export function UserContext(
 
   React.useEffect(() => {
     fetchData('session/me').then((res: any) => {
-      if (res.status) setUser(res.data);
-      else setUser(null);
+      if (res.status) {
+        if (res.data.role === 'admin') {
+          setUser(res.data);
+        } else {
+          globalThis.location.href = '/';
+        }
+      } else setUser(null);
     });
   }, []);
 

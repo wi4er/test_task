@@ -11,10 +11,9 @@ import { userContext } from '../../context/UserContext';
 
 export function AuthForm() {
   const {user, fetchUser, error} = React.useContext(userContext);
-  const [login, setLogin] = React.useState('333@ukr.net');
-  const [password, setPassword] = React.useState('qwerty');
+  const [login, setLogin] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
-  console.log(error);
   return (
     <div className={css.root}>
       <Dialog

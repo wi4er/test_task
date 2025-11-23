@@ -16,7 +16,7 @@ export function UserPopup(
   },
 ) {
   const {postData} = React.useContext(apiContext) || {};
-  const {user, setUser} = React.useContext(userContext);
+  const {setUser} = React.useContext(userContext);
   const {closePopup} = React.useContext(popupContext);
   const [type, setType] = React.useState<UserFormType>('authorization');
   const [email, setEmail] = React.useState('');

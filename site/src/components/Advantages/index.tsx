@@ -1,5 +1,5 @@
 import css from './index.module.css';
-import { ElementType, ReactNode } from 'react';
+import { ElementType } from 'react';
 import { advantageList } from './mock/advantage-list';
 import { Item } from './Item';
 

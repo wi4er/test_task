@@ -1,7 +1,6 @@
 import css from './Item.module.css';
 import font from '../../fonts/text-styles.module.css';
 import { OrderEntity } from '@/model/order.entity';
-import { ProductEntity } from '@/model/product.entity';
 import { SmallCard } from '@/widget/SmallCard';
 import cn from 'classnames';
 

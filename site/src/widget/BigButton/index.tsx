@@ -7,11 +7,11 @@ export function BigButton(
   {
     children,
     onClick,
-    type,
+    type = 'button',
   }: {
     children: ReactNode;
     onClick: () => void;
-    type: string;
+    type: 'button' | 'submit' | 'reset' | undefined;
   },
 ) {
   return (

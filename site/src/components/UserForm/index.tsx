@@ -11,7 +11,7 @@ import { BigButton } from '@/widget/BigButton';
 import { useRouter } from 'next/navigation';
 
 export function UserForm() {
-  const {postData, putData} = React.useContext(apiContext);
+  const {putData} = React.useContext(apiContext);
   const {user, logout} = React.useContext(userContext);
   const router = useRouter();
 

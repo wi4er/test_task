@@ -1,6 +1,5 @@
 'use client';
 
-import css from './ApiContext.module.css';
 import React, { ReactNode } from 'react';
 
 interface ApiType {

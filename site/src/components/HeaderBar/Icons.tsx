@@ -7,7 +7,6 @@ import AccountSvg from './svg/account.svg';
 import LoginSvg from './svg/login.svg';
 import BasketSvg from './svg/basket.svg';
 import HeartSvg from './svg/heart.svg';
-import SearchSvg from './svg/search.svg';
 import { BasketPopup } from '@/components/BasketPopup';
 import { UserPopup } from '@/components/UserPopup';
 import { basketContext } from '@/context/BasketProvider';

@@ -43,7 +43,10 @@ export function SmallCard(
         <span className={cn(css.price, font.poppins_medium)}>${product.price}</span>
       </div>
 
-      {onDelete ? <DeleteSvg className={css.delete}/> : null}
+      {onDelete ? <DeleteSvg
+        className={css.delete}
+        onClick={onDelete}
+      /> : null}
     </div>
   );
 }

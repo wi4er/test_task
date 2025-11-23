@@ -33,7 +33,7 @@ export function Card(
       </div>
 
       <div className={cn(css.price, font.poppins_semi_bold)}>
-        {item.price}
+        $ {item.price}
       </div>
 
       <Popup

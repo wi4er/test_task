@@ -13,13 +13,19 @@ class OrdersController < ApplicationController
     render json: {
       status: true,
       data: Order.where(user_id: current_user.id)
-    }, include: :order_description
+    }, include: :order_description, OrderDescription:item
   end
 
   def create
     @order = Order.new(
       user_id: current_user.id,
-      amount: params[:amount]
+      amount: 1000,
+      order_description: params[:items].map { |it|
+        OrderDescription.new(
+          item_id: it[:item],
+          quantity: it[:quantity]
+        )
+      }
     )
 
     if @order.save
@@ -27,6 +33,11 @@ class OrdersController < ApplicationController
         status: true,
         data: @order
       }, include: :order_description
+    else
+      render json: {
+        status: false,
+        error: @order.errors
+      }, status: :forbidden
     end
   end
 

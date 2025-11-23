@@ -1,11 +1,9 @@
-import css from './index.module.css';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormEvent } from 'react';
 import { apiContext } from '../../context/ApiContext';
@@ -56,25 +54,20 @@ export function ProductForm(
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>New product</DialogTitle>
+      <DialogTitle>{productId ? `Update Product #${productId}` : 'New Product'}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          To subscribe to this website, please enter your email address here. We
-          will send updates occasionally.
-        </DialogContentText>
-
         <form onSubmit={handleSubmit} id="subscription-form">
-          {productId && <div>
-              <TextField
-                  margin="dense"
-                  id="id"
-                  name="id"
-                  label="ID"
-                  variant="standard"
-                  value={id}
-                  disabled
-              />
-          </div>}
+          {productId ? <div>
+            <TextField
+              margin="dense"
+              id="id"
+              name="id"
+              label="ID"
+              variant="standard"
+              value={id}
+              disabled
+            />
+          </div> : null}
 
           <TextField
             autoFocus

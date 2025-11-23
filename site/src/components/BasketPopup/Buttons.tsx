@@ -1,7 +1,10 @@
+import React from 'react';
 import css from './Buttons.module.css';
 import font from '../../fonts/text-styles.module.css';
 import cn from 'classnames';
 import Link from 'next/link';
+import { basketContext } from '@/context/BasketProvider';
+import { useRouter } from 'next/navigation';
 
 export function Buttons(
   {
@@ -12,6 +15,9 @@ export function Buttons(
     onClose: () => void;
   }
 ) {
+  const {checkoutOrder} = React.useContext(basketContext);
+  const router = useRouter();
+
   return (
     <div className={cn(css.root, className, font.poppins_regular)}>
       <Link
@@ -22,13 +28,17 @@ export function Buttons(
         Cart
       </Link>
 
-      <Link
+      <button
         className={css.item}
-        href={'/checkout'}
-        onClick={onClose}
+        onClick={() => {
+          checkoutOrder().then(() => {
+            router.push('/orders/')
+            onClose();
+          })
+        }}
       >
         Checkout
-      </Link>
+      </button>
 
       <button className={css.item}>
         Comparison

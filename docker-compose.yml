@@ -25,12 +25,13 @@ services:
       - ./admin:/app
 
   postgres:
-    container_name: test-database
+    container_name: test-db
     image: postgres:18.0
     restart: always
     environment:
       POSTGRES_DB: api_development
-      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DATA_BASE_PASSWORD}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
@@ -52,7 +53,8 @@ services:
       - postgres
     ports:
       - "3030:3000"
-
+    environment:
+      DB_PASSWORD: ${DATA_BASE_PASSWORD}
 
   site:
     container_name: test-site

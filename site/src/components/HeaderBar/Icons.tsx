@@ -34,7 +34,7 @@ export function Icons() {
       ) : (
         <button
           className={css.item}
-          onClick={() => openPopup({element: <UserPopup />})}
+          onClick={() => openPopup({element: <UserPopup/>})}
         >
           <AccountSvg/>
         </button>
@@ -44,13 +44,12 @@ export function Icons() {
         <HeartSvg/>
       </button>
 
-      <button className={css.item}>
-        <SearchSvg/>
-      </button>
-
       <button
         className={css.item}
-        onClick={() => openPopup({element: <BasketPopup />})}
+        onClick={() => {
+          if (user) openPopup({element: <BasketPopup/>});
+          else openPopup({element: <UserPopup/>});
+        }}
       >
         <BasketSvg/>
 

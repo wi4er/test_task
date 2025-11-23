@@ -34,9 +34,17 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @amount = 0
+
+    params[:items].each { |it|
+      @price = Item.find(it[:item]).price
+
+      @amount += @price * it[:quantity]
+    }
+
     @order = Order.new(
       user_id: current_user.id,
-      amount: 1000,
+      amount: @amount,
       order_description: params[:items].map { |it|
         OrderDescription.new(
           item_id: it[:item],

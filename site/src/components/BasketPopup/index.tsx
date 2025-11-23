@@ -44,6 +44,9 @@ export function BasketPopup() {
     })
   }, [items]);
 
+  const total = basket.reduce((acc, it) =>{
+    return acc + it.count * it.product.price;
+  }, 0);
 
   return (
     <div className={css.root}>
@@ -79,7 +82,7 @@ export function BasketPopup() {
           </div>
 
           <div className={cn(css.price, font.poppins_semi_bold)}>
-            Rs. 520,000.00
+            $ { total }
           </div>
         </div>
 

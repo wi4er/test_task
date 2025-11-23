@@ -1,27 +1,38 @@
+'use client';
+
+import React from 'react';
 import css from './Menu.module.css';
 import font from '../../fonts/text-styles.module.css';
 import cn from 'classnames';
+import Link from 'next/link';
+import { userContext } from '@/context/UserProvider';
 
 
 export function Menu() {
+  const {user} = React.useContext(userContext);
 
   return (
     <div className={css.root}>
-      <div className={cn(css.item, font.poppins_medium)}>
+      <Link
+        className={cn(css.item, font.poppins_medium)}
+        href={'/'}
+      >
         Home
-      </div>
+      </Link>
 
-      <div className={cn(css.item, font.poppins_medium)}>
-        Shop
-      </div>
+      {user ? <Link
+        href={'/orders'}
+        className={cn(css.item, font.poppins_medium)}
+      >
+        Orders
+      </Link> : null}
 
-      <div className={cn(css.item, font.poppins_medium)}>
-        About
-      </div>
-
-      <div className={cn(css.item, font.poppins_medium)}>
-        Contact
-      </div>
+      {user ? <Link
+        href={'/personal'}
+        className={cn(css.item, font.poppins_medium)}
+      >
+        Personal
+      </Link> : null}
     </div>
   );
 }

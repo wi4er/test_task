@@ -16,6 +16,10 @@ interface ApiType {
     { status: true; data: T; }
     | { status: false, error: any }
   >;
+  deleteData: (url: string) => Promise<
+    { status: true;  }
+    | { status: false, error: any }
+  >;
 }
 
 export const apiContext = React.createContext<ApiType>({} as ApiType);
@@ -55,6 +59,15 @@ export function ApiContext(
           },
           body: JSON.stringify(data),
         }).then<T>(res => res.json());
+      },
+      deleteData(url: string) {
+        return fetch(`${host}/${url}`, {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: {
+            'content-type': 'application/json',
+          },
+        }).then(res => res.json());
       },
     }}>
       {children}

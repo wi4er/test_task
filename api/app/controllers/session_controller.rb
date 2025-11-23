@@ -11,12 +11,7 @@ class SessionController < ApplicationController
 
       render json: {
         status: true,
-        data: {
-          id: @user&.id,
-          email: @user&.email,
-          first_name: @user&.first_name,
-          last_name: @user&.last_name,
-        }
+        data: @user.as_json(only: [:id, :email, :last_name, :first_name, :created_at, :role])
       }, status: :ok
     else
       render json: {
@@ -38,10 +33,7 @@ class SessionController < ApplicationController
 
       render json: {
         status: true,
-        data: {
-          id: @user&.id,
-          email: @user&.email,
-        }
+        data: as_json(only: [:id, :email, :last_name, :first_name, :created_at, :role])
       }, status: :ok
     else
       render json: {
@@ -70,7 +62,7 @@ class SessionController < ApplicationController
     if @user&.save
       render json: {
         status: true,
-        data: @user.as_json(only: [:id, :email, :last_name, :first_name, :created_at])
+        data: @user.as_json(only: [:id, :email, :last_name, :first_name, :created_at, :role])
       }
     else
       render json: {

@@ -1,7 +1,5 @@
 .root {
     padding: 100px;
-
-
 }
 
 .title {
@@ -17,4 +15,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.but_list {
+    display: flex;
+    gap: 32px;
 }

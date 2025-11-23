@@ -42,7 +42,7 @@ export function UserContext(
         if (res.data.role === 'admin') {
           setUser(res.data);
         } else {
-          globalThis.location.href = '/';
+          setUser(null)
         }
       } else setUser(null);
     });
@@ -54,8 +54,13 @@ export function UserContext(
       error,
       fetchUser: (email: string, password: string) => {
         return postData('session/sign_in', {email, password}).then((res: any) => {
-          if (res.status) setUser(res.data);
-          else setError(res.error);
+          if (res.status) {
+            if (res.data.role === 'admin') {
+              setUser(res.data);
+            } else {
+              setUser(null)
+            }
+          } else setError(res.error);
         });
       },
       logout: () => {

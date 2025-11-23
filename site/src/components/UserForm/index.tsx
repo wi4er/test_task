@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import css from './index.module.css';
@@ -8,36 +8,39 @@ import { userContext } from '@/context/UserProvider';
 import cn from 'classnames';
 import { BigInput } from '@/widget/BigInput';
 import { BigButton } from '@/widget/BigButton';
+import { useRouter } from 'next/navigation';
 
 export function UserForm() {
   const {postData, putData} = React.useContext(apiContext);
-  const {user} = React.useContext(userContext);
+  const {user, logout} = React.useContext(userContext);
+  const router = useRouter();
 
-  const [firstName, setFirstName] = React.useState(user?.first_name || '')
-  const [lastName, setLastName] = React.useState(user?.last_name || '')
-  const [password, setPassword] = React.useState('')
-  const [confirm, setConfirm] = React.useState('')
+  const [firstName, setFirstName] = React.useState(user?.first_name || '');
+  const [lastName, setLastName] = React.useState(user?.last_name || '');
+  const [password, setPassword] = React.useState('');
+  const [confirm, setConfirm] = React.useState('');
 
   return (
     <div className={css.root}>
       <h1 className={cn(css.title, font.poppins_semi_bold)}>
-        User data <span className={css.name}>{user.email}</span>
+        User data <span className={css.name}>{user?.email}</span>
       </h1>
 
       <form
-       className={css.list}
-       onSubmit={event => {
-         event.preventDefault();
+        className={css.list}
+        onSubmit={event => {
+          event.preventDefault();
 
-         putData('session/me', {
-           first_name: firstName,
-           last_name: lastName,
-           password: password || null
-         }).then((res: any) => {
-           console.log(res);
-         })
+          putData('session/me', {
+            first_name: firstName,
+            last_name: lastName,
+            password: password || null,
+          }).then(res => {
+            if (res.status) alert('Saved successful!');
+            else alert(res.error.toString());
+          });
 
-       }}
+        }}
       >
         <BigInput
           label={'First Name'}
@@ -68,9 +71,24 @@ export function UserForm() {
           onChange={event => setConfirm(event.target.value)}
         />
 
-        <BigButton>
-          Submit
-        </BigButton>
+        <div className={css.but_list}>
+          <BigButton
+            onClick={() => {
+            }}
+            type={'submit'}
+          >
+            Submit
+          </BigButton>
+
+          <BigButton
+            onClick={() => {
+              logout().then(() => router.push('/'));
+            }}
+            type={'button'}
+          >
+            Logout
+          </BigButton>
+        </div>
       </form>
     </div>
   );

@@ -11,8 +11,6 @@ export function Item(
     item: OrderEntity;
   }
 ) {
-
-  console.log(item);
   return (
     <div className={css.root}>
       <div className={cn(css.created, font.poppins_semi_bold)}>

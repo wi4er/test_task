@@ -9,6 +9,7 @@ import { ProductEntity } from '@/model/product.entity';
 import CloseSvg from './svg/Close.svg';
 import { popupContext } from '@/context/PopupProvider';
 import { SmallCard } from '@/widget/SmallCard';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export interface BasketItem {
   id: number;
@@ -24,27 +25,28 @@ export function BasketPopup() {
 
   React.useEffect(() => {
     getData<ProductEntity>('items').then(res => {
-      const result = []
+      const result = [];
 
       if (res.status) {
         for (const basketItem of items) {
           for (const productItem of res.data) {
-            if (basketItem.id === productItem.id) {
+            if (basketItem.product === productItem.id) {
               result.push({
-                id: basketItem.id,
+                id: basketItem.product,
                 product: productItem,
-                count: basketItem.count,
-              })
+                count: basketItem.quantity,
+              });
             }
           }
         }
 
         setBasket(result);
       }
-    })
+    });
   }, [items]);
 
-  const total = basket.reduce((acc, it) =>{
+
+  const total = basket.reduce((acc, it) => {
     return acc + it.count * it.product.price;
   }, 0);
 
@@ -65,15 +67,30 @@ export function BasketPopup() {
         <div className={css.line}/>
 
         <div className={css.list}>
-          {basket.map(item => (
-            <SmallCard
-              key={item.product.id}
-              product={item.product}
-              quantity={item.count}
-              onEdit={event => dispatch({type: 'SET', product: item.id, count: +event.target.value})}
-              onDelete={() => dispatch({type: 'REMOVE', id: item.id})}
-            />
-          ))}
+          <AnimatePresence>
+            {basket.map(item => (
+              <motion.div
+                initial={{opacity: 0}}
+                animate={{opacity: 1, height: 105}}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                  transition: {
+                    opacity: {duration: .3},
+                    height: {duration: .2, delay: .2},
+                  }
+                }}
+                key={item.product.id}
+              >
+                <SmallCard
+                  product={item.product}
+                  quantity={item.count}
+                  onEdit={event => dispatch({type: 'SET', product: item.id, quantity: +event.target.value})}
+                  onDelete={() => dispatch({type: 'REMOVE', product: item.id})}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
         <div className={css.total}>
@@ -82,7 +99,7 @@ export function BasketPopup() {
           </div>
 
           <div className={cn(css.price, font.poppins_semi_bold)}>
-            $ { total }
+            $ {total}
           </div>
         </div>
 

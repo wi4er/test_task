@@ -1,9 +1,7 @@
-import css from './UserContext.module.css';
 import React from 'react';
 import { AuthForm } from '../components/AuthForm';
 import { apiContext } from './ApiContext';
 import { UserEntity } from '../model/User.entity';
-
 
 export interface UserData {
   user: UserEntity | null | undefined,

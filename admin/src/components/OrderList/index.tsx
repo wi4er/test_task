@@ -2,13 +2,13 @@ import React from 'react';
 import { apiContext } from '../../context/ApiContext';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Visibility';
 import { OrderEntity } from '../../model/Order.entity';
 
 export function OrderList() {
-  const {fetchData, deleteData} = React.useContext(apiContext);
+  const {fetchData} = React.useContext(apiContext);
   const [list, setList] = React.useState<Array<OrderEntity>>([]);
   const [edit, setEdit] = React.useState<number | null>(null);
 

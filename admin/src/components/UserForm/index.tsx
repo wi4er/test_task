@@ -64,7 +64,7 @@ export function UserForm(
         }
       });
     }
-  }, [userId]);
+  }, [userId, fetchData]);
 
   return (
     <Dialog open={open} onClose={handleClose}>

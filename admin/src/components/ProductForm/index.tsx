@@ -50,7 +50,7 @@ export function ProductForm(
         setImage(res.data.image);
       });
     }
-  }, [productId]);
+  }, [productId, fetchData]);
 
   return (
     <Dialog open={open} onClose={handleClose}>

@@ -3,13 +3,87 @@
 import React, { ReactNode } from 'react';
 import { apiContext } from '@/context/ApiContext';
 
-export interface BasketData {
 
-  items: Array<{ id: number, count: number }>;
+export interface BasketItem {
+  product: number;
+  quantity: number;
+}
+
+export interface BasketData {
+  items: Array<BasketItem>;
   dispatch: (action: any) => void;
   checkoutOrder: () => Promise<void>;
-
 }
+
+type BasketAction = {
+  type: 'INIT';
+  data: Array<BasketItem>;
+} | {
+  type: 'CLEAR';
+} | {
+  type: 'ADD',
+  product: number;
+} | {
+  type: 'SET',
+  product: number;
+  quantity: number
+} | {
+  type: 'REMOVE',
+  product: number;
+};
+
+const reducer: { [key: string]: (state: Array<BasketItem>, action: BasketAction) => void } = {
+  'INIT': (state, action) => {
+    if (action.type !== 'INIT') return;
+
+    state.push(...action.data);
+  },
+  'CLEAR': state => {
+    state.length = 0;
+  },
+  'ADD': (state, action) => {
+    if (action.type !== 'ADD') return;
+
+    for (const key in state) {
+      if (state[key].product === action.product) {
+        state[key] = {
+          product: state[key].product,
+          quantity: state[key].quantity + 1,
+        };
+
+        return;
+      }
+    }
+
+    state.push({product: action.product, quantity: 1});
+  },
+  'SET': (state, action) => {
+    if (action.type !== 'SET') return;
+
+    console.log(action);
+    for (const key in state) {
+      if (state[key].product === action.product) {
+        if (action.quantity <= 0) {
+          state.splice(+key, 1);
+        } else {
+          state[key] = {
+            product: action.product,
+            quantity: action.quantity,
+          };
+        }
+
+        return;
+      }
+    }
+  },
+  'REMOVE': (state, action) => {
+    if (action.type !== 'REMOVE') return;
+
+    for (const key in state) {
+      if (state[key].product === action.product) state.splice(+key, 1);
+    }
+  },
+};
 
 export const basketContext = React.createContext<BasketData>({} as BasketData);
 
@@ -22,61 +96,13 @@ export function BasketProvider(
 ) {
   const {postData} = React.useContext(apiContext);
 
-  const [items, dispatch] = React.useReducer((state: Array<any>, action) => {
-    switch (action.type) {
-      case 'INIT':
-        return action.data;
+  const [items, dispatch] = React.useReducer((state: Array<BasketItem>, action: any): Array<BasketItem> => {
+    let updated = [...state];
 
-      case 'CLEAR':
-        localStorage.setItem('basket', JSON.stringify([]));
-        return [];
+    reducer[action.type](updated, action);
 
-      case 'ADD':
-        for (const key in state) {
-          if (state[key].id === action.product) {
-            const updated = [...state];
-            updated[key] = {
-              id: state[key].id,
-              count: state[key].count + 1,
-            };
-
-            localStorage.setItem('basket', JSON.stringify(updated));
-            return updated;
-          }
-        }
-
-        localStorage.setItem('basket', JSON.stringify([...state, {id: action.product, count: 1}]));
-        return [...state, {id: action.product, count: 1}];
-
-      case 'SET':
-        for (const key in state) {
-          if (state[key].id === action.product) {
-            const updated = [...state];
-            updated[key] = {
-              id: state[key].id,
-              count: action.count,
-            };
-
-            console.log(updated);
-            localStorage.setItem('basket', JSON.stringify(updated));
-            return updated;
-          }
-        }
-
-        return state;
-
-      case 'REMOVE':
-        for (const key in state) {
-          if (state[key].id === action.id) {
-            const updated = [...state];
-            updated.splice(+key, 1);
-
-            localStorage.setItem('basket', JSON.stringify(updated));
-            return updated;
-          }
-        }
-        break;
-    }
+    localStorage.setItem('basket', JSON.stringify(updated));
+    return updated;
   }, []);
 
   React.useEffect(() => {
@@ -91,7 +117,7 @@ export function BasketProvider(
       dispatch,
       checkoutOrder: () => {
         return postData('orders', {
-          items: items.map(it => ({item: it.id, quantity: it.count})),
+          items: items.map(it => ({item: it.product, quantity: it.quantity})),
         }).then(res => dispatch({type: 'CLEAR'}));
       },
     }}>

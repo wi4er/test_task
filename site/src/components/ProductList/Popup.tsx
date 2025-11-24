@@ -11,6 +11,8 @@ import CompareSvg from './svg/compare.svg';
 import HeartSvg from './svg/Heart.svg';
 import { popupContext } from '@/context/PopupProvider';
 import { BasketPopup } from '@/components/BasketPopup';
+import { userContext } from '@/context/UserProvider';
+import { UserPopup } from '@/components/UserPopup';
 
 export function Popup(
   {
@@ -22,6 +24,7 @@ export function Popup(
   },
 ) {
   const {dispatch} = React.useContext(basketContext);
+  const {user} = React.useContext(userContext);
   const {openPopup} = React.useContext(popupContext);
 
   return (
@@ -50,7 +53,11 @@ export function Popup(
             className={cn(css.buy, font.poppins_semi_bold)}
             onClick={() => {
               dispatch({type: 'ADD', product: id});
-              openPopup({element: <BasketPopup />})
+              if (user) {
+                openPopup({element: <BasketPopup />})
+              } else {
+                openPopup({element: <UserPopup />})
+              }
             }}
           >
             Add to cart
